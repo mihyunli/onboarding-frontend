@@ -24,6 +24,9 @@
       "@babel/preset-react"
     ]
   },
+  "resolutions": {
+    "@types/react": "^17.0.43"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
