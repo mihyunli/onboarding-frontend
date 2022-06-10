@@ -5,7 +5,8 @@ import httpClient from '../utils/axios';
 // ----------------------------------------------------------------------
 
 export const URLS = {
-  LOGIN: `.../auth/signin`,
+  LOGIN: `/auth/signin`,
+  SIGNUP: `/auth/signup`,
 };
 
 // API
@@ -14,6 +15,15 @@ export async function signIn(input: any): Promise<any> {
     method: 'POST',
     url: URLS.LOGIN,
     data: { ...input },
+  });
+  return data;
+}
+
+export async function signUp(form: any): Promise<any> {
+  const { data } = await httpClient({
+    method: 'POST',
+    url: URLS.SIGNUP,
+    data: { ...form },
   });
   return data;
 }
