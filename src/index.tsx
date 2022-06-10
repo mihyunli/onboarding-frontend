@@ -12,6 +12,7 @@ import { HelmetProvider } from 'react-helmet-async';
 // contexts
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 //
 import App from './App';
@@ -22,9 +23,11 @@ ReactDOM.render(
   <HelmetProvider>
     <SettingsProvider>
       <CollapseDrawerProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
       </CollapseDrawerProvider>
     </SettingsProvider>
   </HelmetProvider>,
