@@ -6,6 +6,7 @@ import { Button, TextField, Grid } from '@mui/material';
 // hooks
 import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
+import useAuth from '../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -30,17 +31,28 @@ export default function SignUp() {
   const [errors, setErrors] = useState(defaultValues);
 
   const { values, handleChange } = useForm<IFormValues>(defaultValues);
+  // useForm<IFormValues>({ defaultValues: {} } });
 
-  const handleSignUp = () => {
+  const auth = useAuth();
+
+  const handleSignUp = async () => {
     if (!isValid()) return console.log('유효성 검사 실패');
+    const params = {
+      email: values.email,
+      username: values.name,
+      password: values.pw,
+    };
+    const res = await auth.register(params);
+    console.log('회원가입 결과 >>', res);
 
-    navigation('/');
+    navigation('/login');
   };
 
   const isValid = () => {
-    let result: boolean;
+    let result = true;
     let errorMessages = {} as IFormValues;
 
+    // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z] 까지만 이씅면 된다고 하심!
     const emailPattern =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     const pwPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
@@ -48,8 +60,10 @@ export default function SignUp() {
     const { email, name, pw, pwCheck } = values;
 
     for (const key in values) {
-      if (values[key] === '') errorMessages[key] = `필수 정보입니다.`;
-      result = false;
+      if (values[key] === '') {
+        errorMessages[key] = `필수 정보입니다.`;
+        result = false;
+      }
     }
     if (email && !emailPattern.test(email)) {
       errorMessages.email = `이메일 형식이 올바르지 않습니다.`;
@@ -68,8 +82,6 @@ export default function SignUp() {
       result = false;
     }
     setErrors(errorMessages);
-    result = true;
-
     return result;
   };
 
