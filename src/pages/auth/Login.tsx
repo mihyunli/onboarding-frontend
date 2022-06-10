@@ -3,22 +3,41 @@ import { Grid, Button, TextField } from '@mui/material';
 
 // hooks
 import { useNavigate } from 'react-router-dom';
-import useSettings from '../../hooks/useSettings';
-import { useState, useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
+import useForm from '../../hooks/useForm';
 
 // ----------------------------------------------------------------------
 
 export default function Login() {
-  const { themeStretch } = useSettings();
-
   const navigation = useNavigate();
 
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
+  interface IFormValues {
+    email: string;
+    password: string;
+  }
 
-  const handleLogin = () => {
-    console.log('메인으로 이동', id, pw);
+  const defaultValues = {
+    email: '',
+    password: '',
+  };
+
+  const { values, handleChange } = useForm<IFormValues>(defaultValues);
+  const auth = useAuth();
+
+  const handleLogin = async () => {
+    const params = {
+      email: values.email,
+      password: values.password,
+    };
+
+    const res = await auth.login(params);
+    console.log('로그인 결과 >>', res);
+
     navigation('/');
+  };
+
+  const moveToSignUpPage = () => {
+    navigation('/signup');
   };
 
   return (
@@ -32,18 +51,20 @@ export default function Login() {
     >
       <TextField
         type="text"
-        placeholder="아이디"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
+        placeholder="이메일"
+        value={values.email}
+        name="email"
+        onChange={handleChange}
       />
       <TextField
         type="password"
         placeholder="비밀번호"
-        value={pw}
-        onChange={(e) => setPw(e.target.value)}
+        value={values.password}
+        name="password"
+        onChange={handleChange}
       />
       <Button onClick={handleLogin}>로그인</Button>
-      <Button onClick={handleLogin}>회원가입</Button>
+      <Button onClick={moveToSignUpPage}>회원가입</Button>
     </Grid>
   );
 }

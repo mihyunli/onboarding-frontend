@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 
 // apis
-import { signIn } from '../api/auth';
+import { signIn, signUp } from '../api/auth';
 
 // utils
 import { isEmpty, get } from 'lodash';
@@ -39,8 +39,8 @@ export type AuthContextType = {
   isInitialized: boolean;
   user: AuthUser;
   logout: () => void;
-  login: () => void;
-  register: () => void;
+  login: (form: IFormValues) => void;
+  register: (form: IFormValues) => void;
 };
 
 type AuthPayload = {
@@ -58,6 +58,12 @@ export interface User {
   username: string;
 }
 export type AuthActions = ActionMap<AuthPayload>[keyof ActionMap<AuthPayload>];
+
+interface IFormValues {
+  email: string;
+  username?: string;
+  password: string;
+}
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -110,9 +116,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
     })().catch((err) => {});
   }, []);
 
-  const login = () => {};
-  const register = () => {};
-  const logout = () => {};
+  const login = (form: IFormValues) => signIn(form);
+  const register = (form: IFormValues) => signUp(form);
+  const logout = () => {
+    console.log('로그아웃 호출!');
+  };
 
   return (
     <AuthContext.Provider
