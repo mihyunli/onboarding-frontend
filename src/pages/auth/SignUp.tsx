@@ -1,5 +1,5 @@
 // @mui
-import { Button, TextField, Grid } from '@mui/material';
+import { Button, TextField, Grid, Typography } from '@mui/material';
 
 // hooks
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ export default function SignUp() {
     confirmPassword: '',
   };
 
-  const { values, handleChange, errors, handleSubmit } = useForm(defaultValues);
+  const { values, handleChange, errors, handleSubmit, resetForm } = useForm(defaultValues);
 
   const handleSignUp = async () => {
     const result = await handleSubmit({
@@ -46,6 +46,14 @@ export default function SignUp() {
         style={{ minHeight: '100vh' }}
       >
         <Grid style={{ width: '500px' }}>
+          <Typography variant="h2" component="div" gutterBottom align="center">
+            회원가입
+          </Typography>
+          <Grid container justifyContent="end">
+            <Button style={{ color: 'grey' }} onClick={resetForm}>
+              초기화
+            </Button>
+          </Grid>
           <TextField
             type="email"
             placeholder="이메일"
@@ -95,9 +103,11 @@ export default function SignUp() {
             fullWidth
             onChange={handleChange}
           />
-          <Grid container justifyContent="center">
-            <Button onClick={moveToLoginPage}>취소</Button>
-            <Button onClick={handleSignUp}>회원가입</Button>
+          <Grid container direction="column" justifyContent="center">
+            <Button variant="contained" style={{ margin: '8px 0px' }} onClick={handleSignUp}>
+              회원가입
+            </Button>
+            <Button onClick={moveToLoginPage}>이미 계정이 있으신가요? 로그인 하기</Button>
           </Grid>
         </Grid>
       </Grid>
