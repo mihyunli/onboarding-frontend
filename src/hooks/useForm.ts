@@ -73,8 +73,10 @@ export default function useForm(defaultValue: IFormParams) {
     }
   };
 
-  // TODO: reset
-  const resetForm = () => {};
+  const resetForm = () => {
+    setValues(defaultValue);
+    setErrors(defaultValue);
+  };
 
   return { values, handleChange, errors, handleSubmit, resetForm };
 }
