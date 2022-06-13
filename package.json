@@ -39,6 +39,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://127.0.0.1:3001",
   "dependencies": {
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.9.0",
