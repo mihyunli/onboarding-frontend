@@ -1,88 +1,34 @@
-import { useState } from 'react';
-
 // @mui
 import { Button, TextField, Grid } from '@mui/material';
 
 // hooks
 import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
-import useAuth from '../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
-
-interface IFormValues {
-  [index: string]: string;
-  email: string;
-  name: string;
-  pw: string;
-  pwCheck: string;
-}
 
 export default function SignUp() {
   const navigation = useNavigate();
 
   const defaultValues = {
     email: '',
-    name: '',
-    pw: '',
-    pwCheck: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
   };
 
-  const [errors, setErrors] = useState(defaultValues);
-
-  const { values, handleChange } = useForm<IFormValues>(defaultValues);
-  // useForm<IFormValues>({ defaultValues: {} } });
-
-  const auth = useAuth();
+  const { values, handleChange, errors, handleSubmit } = useForm(defaultValues);
 
   const handleSignUp = async () => {
-    if (!isValid()) return console.log('유효성 검사 실패');
-    const params = {
-      email: values.email,
-      username: values.name,
-      password: values.pw,
-    };
-    const res = await auth.register(params);
-    console.log('회원가입 결과 >>', res);
-
-    navigation('/login');
-  };
-
-  const isValid = () => {
-    let result = true;
-    let errorMessages = {} as IFormValues;
-
-    // /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z] 까지만 이씅면 된다고 하심!
-    const emailPattern =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    const pwPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-
-    const { email, name, pw, pwCheck } = values;
-
-    for (const key in values) {
-      if (values[key] === '') {
-        errorMessages[key] = `필수 정보입니다.`;
-        result = false;
-      }
-    }
-    if (email && !emailPattern.test(email)) {
-      errorMessages.email = `이메일 형식이 올바르지 않습니다.`;
-      result = false;
-    }
-    if (name && name.length > 10) {
-      errorMessages.name = `이름은 10자 이내로 입력해주세요.`;
-      result = false;
-    }
-    if (pw && !pwPattern.test(pw)) {
-      errorMessages.pw = `비밀번호는 8자 이상 20자 이내로 영문 대소문자 및 특수문자를 포함해야 합니다.`;
-      result = false;
-    }
-    if (pw && pwCheck && pw !== pwCheck) {
-      errorMessages.pwCheck = `비밀번호 확인이 일치하지 않습니다.`;
-      result = false;
-    }
-    setErrors(errorMessages);
-    return result;
+    const result = await handleSubmit({
+      formType: 'SIGNUP',
+      formParams: {
+        email: values.email,
+        username: values.username,
+        password: values.password,
+      },
+    });
+    result && navigation('/login');
   };
 
   const moveToLoginPage = () => {
@@ -99,45 +45,60 @@ export default function SignUp() {
         justifyContent="center"
         style={{ minHeight: '100vh' }}
       >
-        <TextField
-          type="email"
-          placeholder="이메일"
-          value={values.email}
-          name="email"
-          error={errors.email ? true : false}
-          helperText={errors.email}
-          onChange={handleChange}
-        />
-        <TextField
-          type="text"
-          placeholder="이름"
-          value={values.name}
-          name="name"
-          error={errors.name ? true : false}
-          helperText={errors.name}
-          onChange={handleChange}
-        />
-        <TextField
-          type="password"
-          placeholder="비밀번호"
-          value={values.pw}
-          name="pw"
-          error={errors.pw ? true : false}
-          helperText={errors.pw}
-          onChange={handleChange}
-        />
-        <TextField
-          type="password"
-          placeholder="비밀번호 확인"
-          value={values.pwCheck}
-          name="pwCheck"
-          error={errors.pwCheck ? true : false}
-          helperText={errors.pwCheck}
-          onChange={handleChange}
-        />
-        <Grid container justifyContent="center">
-          <Button onClick={moveToLoginPage}>취소</Button>
-          <Button onClick={handleSignUp}>회원가입</Button>
+        <Grid style={{ width: '500px' }}>
+          <TextField
+            type="email"
+            placeholder="이메일"
+            value={values.email}
+            name="email"
+            error={errors.email ? true : false}
+            helperText={
+              errors.email ||
+              '* 이메일은 영소문자, 숫자, 언더바, 하이픈을 사용해 4~20자리로 구성되어야 합니다.'
+            }
+            fullWidth
+            style={{ marginBottom: '8px' }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            placeholder="이름"
+            value={values.username}
+            name="username"
+            error={errors.username ? true : false}
+            helperText={errors.username}
+            style={{ marginBottom: '8px' }}
+            fullWidth
+            onChange={handleChange}
+          />
+          <TextField
+            type="password"
+            placeholder="비밀번호"
+            value={values.password}
+            name="password"
+            error={errors.password ? true : false}
+            helperText={
+              errors.password || '* 비밀번호는 영문, 숫자를 조합한 8~20자리로 구성되어야 합니다.'
+            }
+            fullWidth
+            style={{ marginBottom: '8px' }}
+            onChange={handleChange}
+          />
+          <TextField
+            type="password"
+            placeholder="비밀번호 확인"
+            value={values.confirmPassword}
+            name="confirmPassword"
+            error={errors.confirmPassword ? true : false}
+            helperText={errors.confirmPassword}
+            style={{ marginBottom: '18px' }}
+            fullWidth
+            onChange={handleChange}
+          />
+          <Grid container justifyContent="center">
+            <Button onClick={moveToLoginPage}>취소</Button>
+            <Button onClick={handleSignUp}>회원가입</Button>
+          </Grid>
         </Grid>
       </Grid>
     </>
