@@ -24,6 +24,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: AuthUser;
+  token: string;
 };
 
 export type AuthUser = null | User;
@@ -50,6 +51,7 @@ type AuthPayload = {
   };
   [Types.Login]: {
     user: AuthUser;
+    token: string;
   };
   [Types.Logout]: undefined;
 };
@@ -69,12 +71,14 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
   user: null,
+  token: '',
 };
 
 const JWTReducer = (state: AuthState, action: AuthActions) => {
   switch (action.type) {
     case 'INITIALIZE':
       return {
+        ...state,
         isAuthenticated: action.payload.isAuthenticated,
         isInitialized: true,
         user: action.payload.user,
@@ -84,6 +88,7 @@ const JWTReducer = (state: AuthState, action: AuthActions) => {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
+        token: action.payload.token,
       };
     case 'LOGOUT':
       return {
@@ -106,20 +111,29 @@ function AuthProvider({ children }: { children: ReactNode }) {
     (async () => {
       console.log('@@@ JWTContext INIT @@@');
 
-      // get accessToken
-
       // validate token
 
       // fetch user from db
 
       // set user in provider
     })().catch((err) => {});
-  }, []);
+  }, [state]);
 
-  const login = (form: IFormValues) => signIn(form);
-  const register = (form: IFormValues) => signUp(form);
+  const login = async (form: IFormValues) => {
+    const { user, token } = await signIn(form);
+    dispatch({
+      type: Types.Login,
+      payload: {
+        user: user.username,
+        token: token.accessToken,
+      },
+    });
+  };
+  const register = (form: IFormValues) => {
+    signUp(form);
+  };
   const logout = () => {
-    console.log('로그아웃 호출!');
+    dispatch({ type: Types.Logout });
   };
 
   return (
