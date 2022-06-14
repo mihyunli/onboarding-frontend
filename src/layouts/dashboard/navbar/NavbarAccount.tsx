@@ -1,6 +1,8 @@
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Link, Typography, Avatar } from '@mui/material';
+// hooks
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +24,8 @@ type Props = {
 };
 
 export default function NavbarAccount({ isCollapse }: Props) {
+  const { user } = useAuth();
+
   return (
     <Link underline="none" color="inherit">
       <RootStyle
@@ -50,10 +54,10 @@ export default function NavbarAccount({ isCollapse }: Props) {
           }}
         >
           <Typography variant="subtitle2" noWrap>
-            Rayan Moran
+            {user && user.username}
           </Typography>
           <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-            user
+            {user && user.email}
           </Typography>
         </Box>
       </RootStyle>

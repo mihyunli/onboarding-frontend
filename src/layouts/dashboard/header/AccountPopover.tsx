@@ -5,6 +5,9 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar } from '@mui/material
 // components
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
+// hooks
+import useAuth from '../../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -28,12 +31,21 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const [open, setOpen] = useState<HTMLElement | null>(null);
 
+  const navigation = useNavigate();
+
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setOpen(event.currentTarget);
   };
 
   const handleClose = () => {
     setOpen(null);
+  };
+
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigation('/login');
   };
 
   return (
@@ -77,10 +89,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            Rayan Moran
+            {user && user.username}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            rayan.moran@gmail.com
+            {user && user.email}
           </Typography>
         </Box>
 
@@ -96,7 +108,9 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem sx={{ m: 1 }}>Logout</MenuItem>
+        <MenuItem sx={{ m: 1 }} onClick={handleLogout}>
+          로그아웃
+        </MenuItem>
       </MenuPopover>
     </>
   );
