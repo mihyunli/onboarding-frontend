@@ -1,11 +1,12 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 
 // apis
-import { signIn, signUp } from '../api/auth';
+import { signIn, signUp, getProfile } from '../api/auth';
 
 // utils
 import { isEmpty, get } from 'lodash';
 import { isValidToken, setSession } from '../utils/jwt';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +25,6 @@ export type AuthState = {
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: AuthUser;
-  token: string;
 };
 
 export type AuthUser = null | User;
@@ -51,13 +51,13 @@ type AuthPayload = {
   };
   [Types.Login]: {
     user: AuthUser;
-    token: string;
   };
   [Types.Logout]: undefined;
 };
 
 export interface User {
   username: string;
+  email: string;
 }
 export type AuthActions = ActionMap<AuthPayload>[keyof ActionMap<AuthPayload>];
 
@@ -71,14 +71,12 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
   user: null,
-  token: '',
 };
 
 const JWTReducer = (state: AuthState, action: AuthActions) => {
   switch (action.type) {
     case 'INITIALIZE':
       return {
-        ...state,
         isAuthenticated: action.payload.isAuthenticated,
         isInitialized: true,
         user: action.payload.user,
@@ -88,7 +86,6 @@ const JWTReducer = (state: AuthState, action: AuthActions) => {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        token: action.payload.token,
       };
     case 'LOGOUT':
       return {
@@ -107,32 +104,54 @@ const AuthContext = createContext<AuthContextType | null>(null);
 function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(JWTReducer, initialState);
 
+  const navigation = useNavigate();
+
   useEffect(() => {
     (async () => {
-      console.log('@@@ JWTContext INIT @@@');
+      console.log('@@@ JWTContext INIT @@@', state);
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) return navigation('/login');
 
-      // validate token
+      const isValid = isValidToken(accessToken);
+      if (!isValid) return navigation('/login');
 
-      // fetch user from db
-
-      // set user in provider
+      const { username, email } = await getProfile();
+      dispatch({
+        type: Types.Initial,
+        payload: {
+          isAuthenticated: true,
+          user: { username, email },
+        },
+      });
     })().catch((err) => {});
-  }, [state]);
+  }, []);
 
   const login = async (form: IFormValues) => {
-    const { user, token } = await signIn(form);
-    dispatch({
-      type: Types.Login,
-      payload: {
-        user: user.username,
-        token: token.accessToken,
-      },
-    });
+    try {
+      const { user, token } = await signIn(form);
+      dispatch({
+        type: Types.Login,
+        payload: {
+          user: {
+            username: user.username,
+            email: user.email,
+          },
+        },
+      });
+      setSession(token.accessToken);
+    } catch (e) {
+      console.error(e);
+    }
   };
-  const register = (form: IFormValues) => {
-    signUp(form);
+  const register = async (form: IFormValues) => {
+    try {
+      await signUp(form);
+    } catch (e) {
+      console.error(e);
+    }
   };
   const logout = () => {
+    setSession();
     dispatch({ type: Types.Logout });
   };
 

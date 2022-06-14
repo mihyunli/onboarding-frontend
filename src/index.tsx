@@ -23,11 +23,11 @@ ReactDOM.render(
   <HelmetProvider>
     <SettingsProvider>
       <CollapseDrawerProvider>
-        <AuthProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <AuthProvider>
             <App />
-          </BrowserRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </CollapseDrawerProvider>
     </SettingsProvider>
   </HelmetProvider>,
