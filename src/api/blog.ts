@@ -23,7 +23,7 @@ export async function getAllPosts(): Promise<any> {
 export async function createPost(form: IPostType): Promise<any> {
   const { data } = await httpClient({
     method: 'POST',
-    url: `${URLS.POST}/${form.id}`,
+    url: URLS.POST,
     data: { ...form },
   });
   return data;
