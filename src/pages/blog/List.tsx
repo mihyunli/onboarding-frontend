@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 import { getAllPosts } from '../../api/blog';
 
 // @mui
-import { Typography, Button, Card, CardContent, CardMedia, Box, Paper } from '@mui/material';
+import { Typography, Button, Box, Paper } from '@mui/material';
 
 // hooks
 import { useNavigate, Link } from 'react-router-dom';
+
+// components
+import PostList from '../../components/dashboard/PostList';
 
 // ----------------------------------------------------------------------
 
@@ -28,33 +31,6 @@ interface IAuthorType {
   createdAt: string;
   email: number;
 }
-
-const BlogListComponent = ({ post }: any) => (
-  <Card sx={{ display: 'flex' }}>
-    <CardMedia
-      component="img"
-      sx={{ width: 151 }}
-      image="/assets/illustrations/illustration_invite.png"
-      alt={post.title}
-    />
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <CardContent sx={{ flex: '1 0 auto' }}>
-        <Typography component="div" variant="h5">
-          {post.title}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary" component="div">
-          {post.body}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary" component="div">
-          작성자: {post.author.username}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" component="div">
-          작성일: {post.createdAt}
-        </Typography>
-      </CardContent>
-    </Box>
-  </Card>
-);
 
 export default function BlogList() {
   const [posts, setPosts] = useState([]);
@@ -107,7 +83,7 @@ export default function BlogList() {
       >
         {posts.map((post: IPostType) => (
           <Link to={`/dashboard/${post.id}`} key={post.id}>
-            <BlogListComponent post={post} />
+            <PostList post={post} />
           </Link>
         ))}
       </Box>

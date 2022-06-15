@@ -9,6 +9,24 @@ import DetailPost from '../../components/dashboard/DetailPost';
 
 // ----------------------------------------------------------------------
 
+interface IPostType {
+  id: number;
+  title: string;
+  body: string;
+  createdAt: string;
+  updatedAt: string;
+  published: boolean;
+  authorId: number;
+  author: IAuthorType;
+}
+
+interface IAuthorType {
+  id: number;
+  username: string;
+  createdAt: string;
+  email: number;
+}
+
 function BlogDetail({ postData }: any) {
   const navigation = useNavigate();
   const postId = useParams().id || '';
@@ -28,7 +46,7 @@ function BlogDetail({ postData }: any) {
 
   const getBlogPostDetail = async () => {
     const posts = await getAllPosts();
-    const detail = posts.filter((p: any) => postId && p.id === parseInt(postId))[0];
+    const detail = posts.filter((p: IPostType) => postId && p.id === parseInt(postId))[0];
     setPost(detail);
   };
 
