@@ -7,7 +7,6 @@ export const URLS = {
 };
 
 interface IPostType {
-  id?: string;
   title: string;
   body: string;
 }
@@ -29,16 +28,16 @@ export async function createPost(form: IPostType): Promise<any> {
   return data;
 }
 
-export async function updatePost(form: IPostType): Promise<any> {
+export async function updatePost(form: IPostType, postId: string): Promise<any> {
   const { data } = await httpClient({
     method: 'PUT',
-    url: `${URLS.POST}/${form.id}`,
+    url: `${URLS.POST}/${postId}`,
     data: { ...form },
   });
   return data;
 }
 
-export async function deletePost(postId: String): Promise<any> {
+export async function deletePost(postId: string): Promise<any> {
   const { data } = await httpClient({
     method: 'DELETE',
     url: `${URLS.POST}/${postId}`,
