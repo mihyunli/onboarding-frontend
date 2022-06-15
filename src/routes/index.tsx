@@ -22,7 +22,7 @@ export default function Router() {
   return useRoutes([
     {
       path: '/',
-      element: <Navigate to="/dashboard/one" replace />,
+      element: <Navigate to="/dashboard" replace />,
     },
     {
       path: '/login',
@@ -36,10 +36,10 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/one" replace />, index: true },
-        { path: 'one', element: <PageOne /> },
-        { path: 'two', element: <PageTwo /> },
-        { path: 'three', element: <PageThree /> },
+        // { element: <Navigate to="/dashboard" replace />, index: true },
+        { path: '', element: <BlosgList />, index: true },
+        { path: ':id', element: <BlogDetail /> },
+        { path: 'create', element: <BlogDetail /> },
         {
           path: 'user',
           children: [
@@ -64,9 +64,8 @@ export default function Router() {
 }
 
 // Dashboard
-const PageOne = Loadable(lazy(() => import('../pages/PageOne')));
-const PageTwo = Loadable(lazy(() => import('../pages/PageTwo')));
-const PageThree = Loadable(lazy(() => import('../pages/PageThree')));
+const BlosgList = Loadable(lazy(() => import('../pages/blog/List')));
+const BlogDetail = Loadable(lazy(() => import('../pages/blog/Detail')));
 const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
 const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
 const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
