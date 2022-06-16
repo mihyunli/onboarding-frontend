@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 
 // apis
 import { getAllPosts } from '../../api/blog';
-
 // @mui
 import { Typography, Button, Box, Paper } from '@mui/material';
-
 // hooks
 import { useNavigate, Link } from 'react-router-dom';
-
+// config
+import { ICON } from '../../config';
 // components
 import PostList from '../../components/dashboard/PostList';
+import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -65,12 +65,30 @@ export default function BlogList() {
       >
         <Paper elevation={3}>Hero</Paper>
       </Box>
-      <Typography variant="h5" component="div" gutterBottom>
-        최근 글 목록
-      </Typography>
-      <Button variant="contained" onClick={moveToWritingPage}>
-        글쓰기
-      </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: '16px',
+          paddingRight: '8px',
+        }}
+      >
+        <Typography variant="h5" component="div">
+          최근 글 목록
+        </Typography>
+        <Button variant="contained" onClick={moveToWritingPage}>
+          <Iconify
+            icon="icon-park-outline:write"
+            sx={{
+              mr: 0.5,
+              width: ICON.NAVBAR_ITEM_HORIZONTAL,
+              height: 16,
+            }}
+          />
+          글쓰기
+        </Button>
+      </Box>
       <Box
         sx={{
           display: 'flex',
