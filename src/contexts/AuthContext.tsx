@@ -110,11 +110,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
     (async () => {
       console.log('@@@ JWTContext INIT @@@', state);
       const accessToken = localStorage.getItem('accessToken');
-      if (!accessToken) return navigation('/login');
+      if (!accessToken) return handleUnauthorizedUsers();
 
       const isValid = isValidToken(accessToken);
-      if (!isValid) return navigation('/login');
+      if (!isValid) return handleUnauthorizedUsers();
 
+      setSession(accessToken);
       const { username, email } = await getProfile();
       dispatch({
         type: Types.Initial,
@@ -126,9 +127,21 @@ function AuthProvider({ children }: { children: ReactNode }) {
     })().catch((err) => {});
   }, []);
 
+  const handleUnauthorizedUsers = () => {
+    dispatch({
+      type: Types.Initial,
+      payload: {
+        isAuthenticated: false,
+        user: null,
+      },
+    });
+    return navigation('/login');
+  };
+
   const login = async (form: IFormValues) => {
     try {
       const { user, token } = await signIn(form);
+      setSession(token.accessToken);
       dispatch({
         type: Types.Login,
         payload: {
@@ -138,7 +151,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
           },
         },
       });
-      setSession(token.accessToken);
     } catch (e) {
       console.error(e);
     }
