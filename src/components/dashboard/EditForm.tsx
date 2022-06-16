@@ -12,10 +12,11 @@ export default function EditForm({ mode, post, hadleChange, moveToDashboard, han
         <InputLabel htmlFor="">제목</InputLabel>
         <TextField
           type="text"
-          placeholder="제목"
+          placeholder="제목을 입력하세요"
           value={post.title}
           fullWidth
           name="title"
+          inputProps={{ maxLength: 255 }}
           onChange={hadleChange}
         />
         <InputLabel htmlFor="">내용</InputLabel>
@@ -25,6 +26,7 @@ export default function EditForm({ mode, post, hadleChange, moveToDashboard, han
           rows="15"
           value={post.body}
           name="body"
+          inputProps={{ maxLength: 1000 }}
           onChange={hadleChange}
         />
         <Grid container justifyContent="center">
