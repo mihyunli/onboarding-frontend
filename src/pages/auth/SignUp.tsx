@@ -1,9 +1,10 @@
 // @mui
 import { Button, TextField, Grid, Typography } from '@mui/material';
-
 // hooks
 import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
+// components
+import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -51,6 +52,14 @@ export default function SignUp() {
           </Typography>
           <Grid container justifyContent="end">
             <Button style={{ color: 'grey' }} onClick={resetForm}>
+              <Iconify
+                icon="ic:baseline-refresh"
+                sx={{
+                  mr: 0.5,
+                  width: 20,
+                  height: 16,
+                }}
+              />
               초기화
             </Button>
           </Grid>
