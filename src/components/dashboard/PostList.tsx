@@ -48,7 +48,7 @@ export default function PostList({ post }: IpropsType) {
         image="/assets/illustrations/illustration_invite.png"
         alt={post.title}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', padding: '3rem', width: '80%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', padding: '3rem' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography
             component="div"

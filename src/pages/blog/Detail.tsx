@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+// @mui
+import { Skeleton, Stack } from '@mui/material';
 // apis
 import { createPost, getAllPosts, updatePost, deletePost } from '../../api/blog';
 // hooks
@@ -36,6 +38,7 @@ function BlogDetail({ postData }: any) {
     title: '',
     body: '',
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // TODO: props 데이터를 갖고 넘어온경우 props로, 없으면 API 조회로.
@@ -48,6 +51,7 @@ function BlogDetail({ postData }: any) {
     const posts = await getAllPosts();
     const detail = posts.filter((p: IPostType) => postId && p.id === parseInt(postId))[0];
     setPost(detail);
+    setLoading(false);
   };
 
   const handelSave = async () => {
@@ -79,12 +83,22 @@ function BlogDetail({ postData }: any) {
   return (
     <>
       {mode === 'read' ? (
-        <DetailPost
-          post={post}
-          moveToDashboard={moveToDashboard}
-          setMode={setMode}
-          handleDelete={handleDelete}
-        />
+        loading ? (
+          <>
+            <Stack spacing={2}>
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+            </Stack>
+          </>
+        ) : (
+          <DetailPost
+            post={post}
+            moveToDashboard={moveToDashboard}
+            setMode={setMode}
+            handleDelete={handleDelete}
+          />
+        )
       ) : (
         <EditForm
           mode={mode}

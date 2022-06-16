@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // apis
 import { getAllPosts } from '../../api/blog';
 // @mui
-import { Typography, Button, Box, Paper } from '@mui/material';
+import { Typography, Button, Box, Paper, Skeleton, Stack } from '@mui/material';
 // hooks
 import { useNavigate, Link } from 'react-router-dom';
 // config
@@ -34,14 +34,20 @@ interface IAuthorType {
 
 export default function BlogList() {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigate();
 
   useEffect(() => {
     const setBlogPosts = async () => {
-      const posts = await getAllPosts();
-      console.log('res', posts);
-      setPosts(posts);
+      try {
+        const posts = await getAllPosts();
+        console.log('res', posts);
+        setPosts(posts);
+        setLoading(false);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     setBlogPosts();
@@ -98,11 +104,21 @@ export default function BlogList() {
           },
         }}
       >
-        {posts.map((post: IPostType) => (
-          <Link to={`/dashboard/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
-            <PostList post={post} />
-          </Link>
-        ))}
+        {loading ? (
+          <>
+            <Stack spacing={2}>
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+              <Skeleton animation="wave" variant="rectangular" height="100px" />
+            </Stack>
+          </>
+        ) : (
+          posts.map((post: IPostType) => (
+            <Link to={`/dashboard/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
+              <PostList post={post} />
+            </Link>
+          ))
+        )}
       </Box>
     </>
   );
