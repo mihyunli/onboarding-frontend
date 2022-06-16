@@ -18,8 +18,12 @@ export function fDateTimeSuffix(date: Date | string | number) {
   return format(new Date(date), 'dd/MM/yyyy hh:mm p');
 }
 
+export function fDateTimeKor(date: Date | string | number) {
+  return format(new Date(date), 'yyyy.MM.dd p');
+}
+
 export function fToNow(date: Date | string | number) {
   return formatDistanceToNow(new Date(date), {
-    addSuffix: true
+    addSuffix: true,
   });
 }

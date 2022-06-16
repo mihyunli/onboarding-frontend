@@ -1,7 +1,8 @@
 import React from 'react';
-
 // @mui
 import { Typography, Card, CardContent, CardMedia, Box } from '@mui/material';
+// utils
+import { fDateTimeKor } from '../../utils/formatTime';
 
 interface IPostType {
   id: number;
@@ -68,7 +69,7 @@ export default function PostList({ post }: IpropsType) {
               marginBottom: '6px',
             }}
           >
-            {`${post.author.username} / ${post.createdAt}`}
+            {`${post.author.username} / ${fDateTimeKor(post.createdAt)}`}
           </Typography>
           <Typography color="text.secondary" component="div" style={{ color: '#616161' }}>
             {truncate('body', post.body)}

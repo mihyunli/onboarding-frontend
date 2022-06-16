@@ -2,8 +2,14 @@
 import { Button, Typography, Box } from '@mui/material';
 // component
 import ProfileCard from './ProfileCard';
+// utils
+import { fDateTimeKor } from '../../utils/formatTime';
 
 export default function DetailPost({ post, moveToDashboard, setMode, handleDelete }: any) {
+  const formatDate = (dateTime: string) => {
+    const newdate = new Date(dateTime.substring(0, 19));
+    return fDateTimeKor(newdate);
+  };
   return (
     <>
       <Typography variant="h2" component="p" gutterBottom>
@@ -13,10 +19,10 @@ export default function DetailPost({ post, moveToDashboard, setMode, handleDelet
         {post.body}
       </Typography>
       <Typography component="p" gutterBottom>
-        작성일: {post.createdAt}
+        작성일: {formatDate(post.createdAt)}
       </Typography>
       <Typography component="p" gutterBottom>
-        수정일: {post.updatedAt}
+        수정일: {formatDate(post.updatedAt)}
       </Typography>
       <Box style={{ width: '400px' }}>
         <ProfileCard author={post.author} />
