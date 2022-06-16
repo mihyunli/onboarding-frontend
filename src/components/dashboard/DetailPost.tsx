@@ -1,6 +1,7 @@
-import React from 'react';
-
-import { Button, Typography } from '@mui/material';
+// mui
+import { Button, Typography, Box } from '@mui/material';
+// component
+import ProfileCard from './ProfileCard';
 
 export default function DetailPost({ post, moveToDashboard, setMode, handleDelete }: any) {
   return (
@@ -11,6 +12,16 @@ export default function DetailPost({ post, moveToDashboard, setMode, handleDelet
       <Typography component="p" gutterBottom>
         {post.body}
       </Typography>
+      <Typography component="p" gutterBottom>
+        작성일: {post.createdAt}
+      </Typography>
+      <Typography component="p" gutterBottom>
+        수정일: {post.updatedAt}
+      </Typography>
+      <Box style={{ width: '400px' }}>
+        <ProfileCard author={post.author} />
+      </Box>
+
       <Button
         variant="outlined"
         style={{ width: '30px', marginRight: '4px' }}
