@@ -95,12 +95,11 @@ export default function BlogList() {
           flexWrap: 'wrap',
           '& > :not(style)': {
             width: '100%',
-            height: 120,
           },
         }}
       >
         {posts.map((post: IPostType) => (
-          <Link to={`/dashboard/${post.id}`} key={post.id}>
+          <Link to={`/dashboard/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
             <PostList post={post} />
           </Link>
         ))}
