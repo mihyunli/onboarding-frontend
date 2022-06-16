@@ -26,27 +26,52 @@ interface IpropsType {
 }
 
 export default function PostList({ post }: IpropsType) {
+  const truncate = (key: string, text: string) => {
+    if (key === 'title' && text.length > 50) return text.substring(0, 50) + '...';
+    if (key === 'body' && text.length > 270) return text.substring(0, 270) + '...';
+    return text;
+  };
+
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card
+      sx={{
+        display: 'flex',
+        marginBottom: '12px',
+        padding: '1rem',
+        height: '180px',
+        alignItems: 'center',
+      }}
+    >
       <CardMedia
         component="img"
-        sx={{ width: 151 }}
+        sx={{ width: 151, padding: '1rem' }}
         image="/assets/illustrations/illustration_invite.png"
         alt={post.title}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', padding: '3rem', width: '80%' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
-            {post.title}
+          <Typography
+            component="div"
+            variant="h4"
+            style={{
+              marginBottom: '6px',
+            }}
+          >
+            {truncate('title', post.title)}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            {post.body}
+          <Typography
+            variant="subtitle1"
+            component="div"
+            style={{
+              fontSize: '12px',
+              color: '#9e9e9e',
+              marginBottom: '6px',
+            }}
+          >
+            {`${post.author.username} / ${post.createdAt}`}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            작성자: {post.author.username}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" component="div">
-            작성일: {post.createdAt}
+          <Typography color="text.secondary" component="div" style={{ color: '#616161' }}>
+            {truncate('body', post.body)}
           </Typography>
         </CardContent>
       </Box>
