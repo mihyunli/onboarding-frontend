@@ -8,6 +8,7 @@ import LoadingScreen from '../components/LoadingScreen';
 // pages
 import Login from '../pages/auth/Login';
 import SignUp from '../pages/auth/SignUp';
+import Profile from '../pages/Profile';
 
 // ----------------------------------------------------------------------
 
@@ -36,19 +37,10 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        // { element: <Navigate to="/dashboard" replace />, index: true },
         { path: '', element: <BlosgList />, index: true },
         { path: ':id', element: <BlogDetail /> },
         { path: 'create', element: <BlogDetail /> },
-        {
-          path: 'user',
-          children: [
-            { element: <Navigate to="/dashboard/user/four" replace />, index: true },
-            { path: 'four', element: <PageFour /> },
-            { path: 'five', element: <PageFive /> },
-            { path: 'six', element: <PageSix /> },
-          ],
-        },
+        { path: '/dashboard/user/:id', element: <Profile /> },
       ],
     },
     {
@@ -66,7 +58,4 @@ export default function Router() {
 // Dashboard
 const BlosgList = Loadable(lazy(() => import('../pages/blog/List')));
 const BlogDetail = Loadable(lazy(() => import('../pages/blog/Detail')));
-const PageFour = Loadable(lazy(() => import('../pages/PageFour')));
-const PageFive = Loadable(lazy(() => import('../pages/PageFive')));
-const PageSix = Loadable(lazy(() => import('../pages/PageSix')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));

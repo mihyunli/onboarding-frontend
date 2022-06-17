@@ -18,12 +18,8 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'General',
-    items: [
-      { title: 'One', path: '/dashboard/one', icon: ICONS.dashboard },
-      { title: 'Two', path: '/dashboard/two', icon: ICONS.ecommerce },
-      { title: 'Three', path: '/dashboard/three', icon: ICONS.analytics },
-    ],
+    subheader: '대시보드',
+    items: [{ title: '블로그', path: '/dashboard', icon: ICONS.dashboard }],
   },
 ];
 

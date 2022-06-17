@@ -1,4 +1,3 @@
-import React from 'react';
 // mui
 import {
   Button,
@@ -10,6 +9,7 @@ import {
   Avatar,
   Container,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface IAuthorType {
   id: number;
@@ -23,6 +23,12 @@ interface IPropsType {
 }
 
 export default function ProfileCard({ author }: IPropsType) {
+  const navigation = useNavigate();
+
+  const moveToProfilePage = () => {
+    navigation(`/dashboard/user/${author.id}`);
+  };
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -46,7 +52,9 @@ export default function ProfileCard({ author }: IPropsType) {
               </Typography>
               <Typography variant="body2">Life is awesome.</Typography>
               <CardActions disableSpacing={true}>
-                <Button size="small">프로필 보기</Button>
+                <Button size="small" onClick={moveToProfilePage}>
+                  프로필 보기
+                </Button>
               </CardActions>
             </Container>
           </Box>

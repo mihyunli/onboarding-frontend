@@ -13,16 +13,12 @@ import { useNavigate } from 'react-router-dom';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
-    linkTo: '/',
+    label: 'Dashboard',
+    linkTo: '/dashboard',
   },
   {
     label: 'Profile',
-    linkTo: '/',
-  },
-  {
-    label: 'Settings',
-    linkTo: '/',
+    linkTo: '',
   },
 ];
 
@@ -46,6 +42,11 @@ export default function AccountPopover() {
   const handleLogout = () => {
     logout();
     navigation('/login');
+  };
+
+  const moveToProfilePage = (linkTo: string) => {
+    navigation(linkTo);
+    handleClose();
   };
 
   return (
@@ -99,11 +100,14 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
+          {MENU_OPTIONS.map((option) => {
+            if (option.label === 'Profile') option.linkTo = `/dashboard/user/${user?.id}`;
+            return (
+              <MenuItem key={option.label} onClick={() => moveToProfilePage(option.linkTo)}>
+                {option.label}
+              </MenuItem>
+            );
+          })}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />

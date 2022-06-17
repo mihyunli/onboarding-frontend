@@ -58,6 +58,7 @@ type AuthPayload = {
 export interface User {
   username: string;
   email: string;
+  id: string;
 }
 export type AuthActions = ActionMap<AuthPayload>[keyof ActionMap<AuthPayload>];
 
@@ -116,12 +117,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
       if (!isValid) return handleUnauthorizedUsers();
 
       setSession(accessToken);
-      const { username, email } = await getProfile();
+      const { username, email, id } = await getProfile();
       dispatch({
         type: Types.Initial,
         payload: {
           isAuthenticated: true,
-          user: { username, email },
+          user: { username, email, id },
         },
       });
     })().catch((err) => {});
@@ -148,6 +149,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
           user: {
             username: user.username,
             email: user.email,
+            id: user.id,
           },
         },
       });
