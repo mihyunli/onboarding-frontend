@@ -89,6 +89,7 @@ export default function BlogList() {
           '& > :not(style)': {
             width: '100%',
             height: 200,
+            marginBottom: '25px',
           },
         }}
       >
@@ -102,24 +103,58 @@ export default function BlogList() {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h2" component="div">
-            Awsome Blog
-          </Typography>
-          <Box style={{ display: 'flex' }}>
-            <form onSubmit={handleSearch}>
-              <TextField
-                type="text"
-                placeholder="검색어를 입력하세요"
-                name="searchKeyword"
-                value={searchKeyword}
-                variant="standard"
-                style={{ marginBottom: '8px', background: 'white' }}
-                onChange={handleKeywordChange}
-              />
-              <Button type="submit" name="submit" variant="outlined">
-                검색
-              </Button>
-            </form>
+          <Box style={{ display: 'flex', alignItems: 'center' }}>
+            <CardMedia
+              component="img"
+              sx={{ width: 180, marginRight: '20px', padding: '10px' }}
+              image="/assets/illustrations/illustration_components.png"
+              alt="no-result"
+            />
+            <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography variant="h2" color="#fafafa" component="h1" align="center">
+                Awsome Blog
+              </Typography>
+              <Typography component="p" color="#f5f5f5" style={{ fontSize: '14px' }} align="center">
+                일상을 기록하고 모아보세요
+              </Typography>
+              <form
+                onSubmit={handleSearch}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '10px',
+                }}
+              >
+                <TextField
+                  type="text"
+                  placeholder="검색어를 입력하세요"
+                  name="searchKeyword"
+                  value={searchKeyword}
+                  variant="standard"
+                  style={{
+                    width: '300px',
+                    height: '35px',
+                    marginRight: '-20px',
+                    background: 'white',
+                    borderRadius: '15px',
+                    paddingLeft: '15px',
+                    paddingRight: '35px',
+                  }}
+                  onChange={handleKeywordChange}
+                />
+                <Button
+                  type="submit"
+                  name="submit"
+                  variant="contained"
+                  style={{ borderRadius: '15px', height: '38px' }}
+                  disableElevation={true}
+                  color="info"
+                >
+                  검색
+                </Button>
+              </form>
+            </Box>
           </Box>
         </Paper>
       </Box>
