@@ -112,10 +112,10 @@ export default function BlogList() {
             />
             <Box style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography variant="h2" color="#fafafa" component="h1" align="center">
-                Awsome Blog
+                Awesome Blog
               </Typography>
               <Typography component="p" color="#f5f5f5" style={{ fontSize: '14px' }} align="center">
-                일상을 기록하고 모아보세요
+                일상을 기록하고 모아보세요 😜
               </Typography>
               <form
                 onSubmit={handleSearch}
