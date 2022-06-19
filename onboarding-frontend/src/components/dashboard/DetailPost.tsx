@@ -1,5 +1,5 @@
 // mui
-import { Button, Typography, Box } from '@mui/material';
+import { Button, Typography, Box, Container } from '@mui/material';
 // component
 import ProfileCard from './ProfileCard';
 // utils
@@ -12,45 +12,55 @@ export default function DetailPost({ post, moveToDashboard, setMode, handleDelet
   };
   return (
     <>
-      <Typography variant="h2" component="p" gutterBottom>
-        {post.title}
-      </Typography>
-      <Typography component="p" gutterBottom>
-        {post.body}
-      </Typography>
-      <Typography component="p" gutterBottom>
-        작성일: {formatDate(post.createdAt)}
-      </Typography>
-      <Typography component="p" gutterBottom>
-        수정일: {formatDate(post.updatedAt)}
-      </Typography>
-      <Box style={{ width: '400px' }}>
-        <ProfileCard author={post.author} />
-      </Box>
-
-      <Button
-        variant="outlined"
-        style={{ width: '30px', marginRight: '4px' }}
-        onClick={moveToDashboard}
-      >
-        목록
-      </Button>
-      <Button
-        variant="contained"
-        color="info"
-        style={{ width: '30px', marginRight: '4px' }}
-        onClick={() => setMode('modify')}
-      >
-        수정
-      </Button>
-      <Button
-        variant="contained"
-        color="error"
-        style={{ width: '30px', marginRight: '4px' }}
-        onClick={handleDelete}
-      >
-        삭제
-      </Button>
+      <Container>
+        <Typography variant="h2" component="p" gutterBottom>
+          {post.title}
+        </Typography>
+        <Typography
+          component="p"
+          variant="caption"
+          color="text.secondary"
+          style={{ marginLeft: '8px' }}
+        >
+          <span style={{ fontStyle: 'italic' }}>by </span>
+          {post.author.username} &#183; {formatDate(post.createdAt)}
+        </Typography>
+        <Typography component="p" style={{ margin: '16px 8px' }}>
+          {post.body}
+        </Typography>
+        <Box style={{ width: '500px', marginTop: '40px' }}>
+          <ProfileCard author={post.author} />
+        </Box>
+        <Box style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+          <Box>
+            <Button
+              variant="outlined"
+              style={{ width: '30px', marginRight: '4px' }}
+              onClick={moveToDashboard}
+            >
+              목록
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="info"
+              style={{ width: '30px', marginRight: '4px' }}
+              onClick={() => setMode('modify')}
+            >
+              수정
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              style={{ width: '30px', marginRight: '4px' }}
+              onClick={handleDelete}
+            >
+              삭제
+            </Button>
+          </Box>
+        </Box>
+      </Container>
     </>
   );
 }
