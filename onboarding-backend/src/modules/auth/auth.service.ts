@@ -37,14 +37,14 @@ export class AuthService {
         email: loginDto.email,
       },
     });
+    if (!user) throw new NotFoundException();
 
     const isPasswordValid = await UtilsProvider.validateHash(
       loginDto.password,
       user.password,
     );
-    if (!user || !isPasswordValid) {
-      throw new NotFoundException();
-    }
+    if (!isPasswordValid) throw new NotFoundException();
+
     return user;
   }
 
