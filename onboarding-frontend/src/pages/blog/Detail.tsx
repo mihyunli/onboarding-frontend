@@ -76,9 +76,8 @@ function BlogDetail({ postData }: any) {
     navigation('/dashboard');
   };
 
-  const moveToDashboard = () => {
-    navigation('/dashboard');
-  };
+  const goBackToPrevPage = () => navigation(-1);
+  const moveToDashboard = () => navigation('/dashboard');
 
   return (
     <>
@@ -104,7 +103,7 @@ function BlogDetail({ postData }: any) {
           mode={mode}
           post={post}
           hadleChange={hadleChange}
-          moveToDashboard={moveToDashboard}
+          goBackToPrevPage={goBackToPrevPage}
           handelSave={handelSave}
         />
       )}
