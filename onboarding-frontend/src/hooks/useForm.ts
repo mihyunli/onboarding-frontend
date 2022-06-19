@@ -60,15 +60,17 @@ export default function useForm(defaultValue: IFormParams) {
     formParams: IFormParams;
   }
 
-  const handleSubmit = ({ formType, formParams }: ISubmitPayload) => {
-    if (!formValidator()) return;
+  const handleSubmit = async ({ formType, formParams }: ISubmitPayload) => {
+    if (!formValidator()) return false;
 
     if (formType === 'SIGNUP') {
-      auth.register(formParams);
-      return true;
+      const { success, message } = await auth.register(formParams);
+      if (!success) alert(message);
+      return success;
     } else if (formType === 'LOGIN') {
-      auth.login(formParams);
-      return true;
+      const { success, message } = await auth.login(formParams);
+      if (!success) alert(message);
+      return success;
     }
   };
 

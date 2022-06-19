@@ -40,8 +40,8 @@ export type AuthContextType = {
   isInitialized: boolean;
   user: AuthUser;
   logout: () => void;
-  login: (form: IFormValues) => void;
-  register: (form: IFormValues) => void;
+  login: (form: IFormValues) => Promise<{ success: boolean; message?: string }>;
+  register: (form: IFormValues) => Promise<{ success: boolean; message?: string }>;
 };
 
 type AuthPayload = {
@@ -153,15 +153,29 @@ function AuthProvider({ children }: { children: ReactNode }) {
           },
         },
       });
+      return { success: true };
     } catch (e) {
-      console.error(e);
+      let res = { success: false, message: '' };
+      if (e.response && e.response.status === 404) {
+        res.message = '사용자를 찾을 수 없습니다.';
+      } else {
+        console.error(e);
+      }
+      return res;
     }
   };
   const register = async (form: IFormValues) => {
     try {
       await signUp(form);
+      return { success: true };
     } catch (e) {
-      console.error(e);
+      let res = { success: false, message: '' };
+      if (e.response && e.response.status === 409) {
+        res.message = '사용자가 이미 존재합니다.';
+      } else {
+        console.error(e);
+      }
+      return res;
     }
   };
   const logout = () => {

@@ -21,7 +21,7 @@ export default function SignUp() {
   const { values, handleChange, errors, handleSubmit, resetForm } = useForm(defaultValues);
 
   const handleSignUp = async () => {
-    const result = await handleSubmit({
+    const isSignUpSuccess = await handleSubmit({
       formType: 'SIGNUP',
       formParams: {
         email: values.email,
@@ -29,7 +29,10 @@ export default function SignUp() {
         password: values.password,
       },
     });
-    result && navigation('/login');
+    if (isSignUpSuccess) {
+      alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+      navigation('/login');
+    }
   };
 
   const moveToLoginPage = () => {

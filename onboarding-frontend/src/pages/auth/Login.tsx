@@ -18,14 +18,14 @@ export default function Login() {
   const { values, handleChange, handleSubmit, errors } = useForm(defaultValues);
 
   const handleLogin = async () => {
-    const result = await handleSubmit({
+    const isLoginSuccess = await handleSubmit({
       formType: 'LOGIN',
       formParams: {
         email: values.email,
         password: values.password,
       },
     });
-    result && navigation('/');
+    isLoginSuccess && navigation('/');
   };
 
   const moveToSignUpPage = () => {
