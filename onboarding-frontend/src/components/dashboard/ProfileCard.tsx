@@ -10,6 +10,7 @@ import {
   Container,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import LetterAvatar from './LetterAvatar';
 
 interface IAuthorType {
   id: number;
@@ -37,10 +38,7 @@ export default function ProfileCard({ author }: IPropsType) {
         </Typography>
         <Box style={{ display: 'flex', alignItems: 'center' }}>
           <Box style={{ marginRight: '20px' }}>
-            <Avatar
-              src="https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_5.jpg"
-              alt="Rayan Moran"
-            />
+            <LetterAvatar name={author.username} styleOptions={{ width: 56, height: 56 }} />
             <Typography variant="h5" component="div">
               {author.username}
             </Typography>

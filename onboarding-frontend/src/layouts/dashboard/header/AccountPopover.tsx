@@ -1,10 +1,11 @@
 import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem, Avatar } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 // components
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
+import LetterAvatar from '../.././../components/dashboard/LetterAvatar';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -68,10 +69,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar
-          src="https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_5.jpg"
-          alt="Rayan Moran"
-        />
+        <LetterAvatar name={user?.username} />
       </IconButtonAnimate>
 
       <MenuPopover

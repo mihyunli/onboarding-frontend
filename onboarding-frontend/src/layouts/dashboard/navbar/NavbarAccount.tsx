@@ -1,6 +1,7 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Link, Typography, Avatar } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
+import LetterAvatar from '../../../components/dashboard/LetterAvatar';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 
@@ -35,11 +36,7 @@ export default function NavbarAccount({ isCollapse }: Props) {
           }),
         }}
       >
-        <Avatar
-          src="https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_5.jpg"
-          alt="Rayan Moran"
-        />
-
+        <LetterAvatar name={user?.username} />
         <Box
           sx={{
             ml: 2,

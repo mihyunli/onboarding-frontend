@@ -6,7 +6,9 @@ import { Box, Grid, Avatar, Typography, Skeleton } from '@mui/material';
 // hooks
 import { Link, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+// components
 import PostListCard from '../components/dashboard/PostListCard';
+import LetterAvatar from '../components/dashboard/LetterAvatar';
 
 // ----------------------------------------------------------------------
 
@@ -64,10 +66,9 @@ export default function Profile() {
           justifyContent: 'center',
         }}
       >
-        <Avatar
-          src="https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_5.jpg"
-          alt="Rayan Moran"
-          style={{
+        <LetterAvatar
+          name={user?.username}
+          styleOptions={{
             width: '75px',
             height: '75px',
             marginBottom: '10px',
@@ -84,10 +85,10 @@ export default function Profile() {
             variant="h4"
             component="div"
             style={{
-              marginBottom: '16px',
+              margin: '16px 0px',
             }}
           >
-            내가 작성한 글
+            내가 작성한 글 ({posts.length})
           </Typography>
 
           <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
