@@ -55,9 +55,6 @@ export default function Profile() {
 
   return (
     <>
-      <Typography variant="h2" component="div" gutterBottom align="center">
-        프로필
-      </Typography>
       <Box
         style={{
           display: 'flex',
@@ -85,7 +82,7 @@ export default function Profile() {
             variant="h4"
             component="div"
             style={{
-              margin: '16px 0px',
+              margin: '40px 0px 16px 0px',
             }}
           >
             내가 작성한 글 ({posts.length})

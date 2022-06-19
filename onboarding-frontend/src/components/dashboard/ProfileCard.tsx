@@ -1,14 +1,5 @@
 // mui
-import {
-  Button,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-  Avatar,
-  Container,
-} from '@mui/material';
+import { Button, Typography, Box, Card, CardContent, CardActions, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LetterAvatar from './LetterAvatar';
 
@@ -31,31 +22,44 @@ export default function ProfileCard({ author }: IPropsType) {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, paddingLeft: '8px' }}>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} variant="subtitle1" color="text.secondary" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           작성자
         </Typography>
         <Box style={{ display: 'flex', alignItems: 'center' }}>
-          <Box style={{ marginRight: '20px' }}>
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginRight: '20px',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <LetterAvatar name={author.username} styleOptions={{ width: 56, height: 56 }} />
-            <Typography variant="h5" component="div">
+            <Typography
+              variant="subtitle1"
+              component="div"
+              style={{
+                marginTop: '6px',
+              }}
+              color="text.primary"
+            >
               {author.username}
             </Typography>
           </Box>
-          <Box style={{}}>
-            <Container>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                {author.email}
-              </Typography>
-              <Typography variant="body2">Life is awesome.</Typography>
-              <CardActions disableSpacing={true}>
-                <Button size="small" onClick={moveToProfilePage}>
-                  프로필 보기
-                </Button>
-              </CardActions>
-            </Container>
-          </Box>
+          <Container>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {author.email}
+            </Typography>
+            <Typography variant="body2">Life is awesome.</Typography>
+            <CardActions style={{ paddingLeft: '0px' }}>
+              <Button style={{ paddingLeft: '0px' }} onClick={moveToProfilePage}>
+                프로필 보기
+              </Button>
+            </CardActions>
+          </Container>
         </Box>
       </CardContent>
     </Card>
