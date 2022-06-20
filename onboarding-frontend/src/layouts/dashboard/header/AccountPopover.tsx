@@ -14,11 +14,13 @@ import { useNavigate } from 'react-router-dom';
 
 const MENU_OPTIONS = [
   {
-    label: 'Dashboard',
+    title: '블로그',
+    label: 'dashboard',
     linkTo: '/dashboard',
   },
   {
-    label: 'Profile',
+    title: '프로필',
+    label: 'profile',
     linkTo: '',
   },
 ];
@@ -99,10 +101,10 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => {
-            if (option.label === 'Profile') option.linkTo = `/dashboard/user/${user?.id}`;
+            if (option.label === 'profile') option.linkTo = `/dashboard/user/${user?.id}`;
             return (
               <MenuItem key={option.label} onClick={() => moveToProfilePage(option.linkTo)}>
-                {option.label}
+                {option.title}
               </MenuItem>
             );
           })}
