@@ -1,9 +1,10 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Tooltip, Fade } from '@mui/material';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
+import useAuth from '../../../hooks/useAuth';
 // utils
 import cssStyles from '../../../utils/cssStyles';
 // config
@@ -14,6 +15,7 @@ import Iconify from '../../../components/Iconify';
 import { IconButtonAnimate } from '../../../components/animate';
 //
 import AccountPopover from './AccountPopover';
+import navConfig from '../navbar/NavConfig';
 
 // ----------------------------------------------------------------------
 
@@ -68,6 +70,8 @@ export default function DashboardHeader({
 
   const isDesktop = useResponsive('up', 'lg');
 
+  const { user } = useAuth();
+
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
       <Toolbar
@@ -83,8 +87,17 @@ export default function DashboardHeader({
             <Iconify icon="eva:menu-2-fill" />
           </IconButtonAnimate>
         )}
-
-        <Box sx={{ flexGrow: 1 }} />
+        <Box
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+            justifyContent: 'end',
+          }}
+        >
+          <Tooltip title={`${user?.username}님, 안녕하세요!`} placement="left" arrow open>
+            <Box />
+          </Tooltip>
+        </Box>
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           {/* <LanguagePopover /> */}
