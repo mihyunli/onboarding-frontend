@@ -83,8 +83,8 @@ export default function useForm(defaultValue: IFormParams) {
 }
 
 const checkEmailType = (email: string) => {
-  // 영소문자 + 숫자 + 언더바/하이픈 허용 4~20자리
-  const emailPattern = /^[a-z0-9_-]{4,20}$/;
+  // 영소문자 + 숫자 + 특수문자(언더바/하이픈/@/.) 허용 4~40자리
+  const emailPattern = /^[a-z0-9@._-]{4,40}$/;
   return emailPattern.test(email);
 };
 
