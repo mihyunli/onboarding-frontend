@@ -4,12 +4,18 @@ import { Button, Typography, Box, Container } from '@mui/material';
 import ProfileCard from './ProfileCard';
 // utils
 import { fDateTimeKor } from '../../utils/formatTime';
+// hooks
+import useAuth from '../../hooks/useAuth';
 
 export default function DetailPost({ post, moveToDashboard, setMode, handleDelete }: any) {
   const formatDate = (dateTime: string) => {
     const newdate = new Date(dateTime.substring(0, 19));
     return fDateTimeKor(newdate);
   };
+
+  const { user } = useAuth();
+  const isAuthor = post.authorId === user?.id;
+
   return (
     <>
       <Container>
@@ -41,24 +47,26 @@ export default function DetailPost({ post, moveToDashboard, setMode, handleDelet
               목록
             </Button>
           </Box>
-          <Box>
-            <Button
-              variant="contained"
-              color="info"
-              style={{ width: '30px', marginRight: '4px' }}
-              onClick={() => setMode('modify')}
-            >
-              수정
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              style={{ width: '30px', marginRight: '4px' }}
-              onClick={handleDelete}
-            >
-              삭제
-            </Button>
-          </Box>
+          {isAuthor && (
+            <Box>
+              <Button
+                variant="contained"
+                color="info"
+                style={{ width: '30px', marginRight: '4px' }}
+                onClick={() => setMode('modify')}
+              >
+                수정
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                style={{ width: '30px', marginRight: '4px' }}
+                onClick={handleDelete}
+              >
+                삭제
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
     </>
