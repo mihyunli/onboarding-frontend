@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 // apis
 import { getAllPosts } from '../api/blog';
 // @mui
-import { Box, Grid, Typography, Skeleton } from '@mui/material';
+import { Box, Grid, Typography, Skeleton, Container } from '@mui/material';
 // hooks
 import { Link, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -79,40 +79,35 @@ export default function Profile() {
         <Typography component="div" color="text.secondary">
           {profile?.email}
         </Typography>
-        <Box>
-          <Typography
-            variant="h4"
-            component="div"
-            style={{
-              margin: '40px 0px 16px 0px',
-            }}
-          >
-            작성한 글 ({posts.length})
-          </Typography>
-
-          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {posts.map((post: IPostType) => (
-              <Grid item xs={2} sm={3} md={4} key={post.id}>
-                {loading ? (
-                  <>
-                    <Skeleton variant="rectangular" width={300} height={180} />
-                    <Skeleton width="60%" />
-                    <Skeleton width={300} />
-                  </>
-                ) : (
-                  <Link
-                    to={`/dashboard/${post.id}`}
-                    key={post.id}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <PostListCard post={post} />
-                  </Link>
-                )}
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
       </Box>
+      <Container>
+        <Typography
+          variant="h4"
+          component="div"
+          style={{
+            margin: '40px 0px 16px 0px',
+          }}
+        >
+          작성한 글 ({posts.length})
+        </Typography>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          {posts.map((post: IPostType) => (
+            <Grid item xs={2} sm={3} md={4} key={post.id}>
+              {loading ? (
+                <>
+                  <Skeleton variant="rectangular" width={300} height={180} />
+                  <Skeleton width="60%" />
+                  <Skeleton width={300} />
+                </>
+              ) : (
+                <Link to={`/dashboard/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
+                  <PostListCard post={post} />
+                </Link>
+              )}
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </>
   );
 }
