@@ -5,7 +5,7 @@ import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
 // components
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
-import LetterAvatar from '../.././../components/dashboard/LetterAvatar';
+import LetterAvatar from '../../../components/dashboard/LetterAvatar';
 // hooks
 import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
