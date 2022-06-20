@@ -6,6 +6,7 @@ import { BoxProps } from '@mui/material';
 export type NavListProps = {
   title: string;
   path: string;
+  label?: string;
   icon?: ReactElement;
   info?: ReactElement;
   caption?: string;

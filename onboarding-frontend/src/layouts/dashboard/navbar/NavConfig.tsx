@@ -19,7 +19,10 @@ const navConfig = [
   // ----------------------------------------------------------------------
   {
     subheader: '대시보드',
-    items: [{ title: '블로그', path: '/dashboard', icon: ICONS.dashboard }],
+    items: [
+      { title: '블로그', label: 'dashboard', path: '/dashboard', icon: ICONS.dashboard },
+      { title: '프로필', label: 'profile', path: '/dashboard/user', icon: ICONS.user },
+    ],
   },
 ];
 
