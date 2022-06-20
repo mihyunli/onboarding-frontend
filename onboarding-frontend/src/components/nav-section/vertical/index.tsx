@@ -5,6 +5,7 @@ import { List, Box, ListSubheader } from '@mui/material';
 import { NavSectionProps } from '../type';
 //
 import { NavListRoot } from './NavList';
+import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,8 @@ export default function NavSectionVertical({
   isCollapse = false,
   ...other
 }: NavSectionProps) {
+  const { user } = useAuth();
+
   return (
     <Box {...other}>
       {navConfig.map((group) => (
@@ -41,10 +44,10 @@ export default function NavSectionVertical({
           >
             {group.subheader}
           </ListSubheaderStyle>
-
-          {group.items.map((list) => (
-            <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />
-          ))}
+          {group.items.map((list) => {
+            if (list.label === 'profile') list.path = `/dashboard/user/${user?.id}`;
+            return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
+          })}
         </List>
       ))}
     </Box>
