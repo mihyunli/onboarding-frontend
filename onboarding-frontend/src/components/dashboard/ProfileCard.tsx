@@ -35,6 +35,7 @@ export default function ProfileCard({ author }: IPropsType) {
               marginRight: '20px',
               alignItems: 'center',
               justifyContent: 'center',
+              width: '180px',
             }}
           >
             <LetterAvatar name={author.username} styleOptions={{ width: 56, height: 56 }} />

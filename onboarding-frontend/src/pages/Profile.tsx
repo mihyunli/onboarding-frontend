@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 // apis
 import { getAllPosts } from '../api/blog';
 // @mui
-import { Box, Grid, Avatar, Typography, Skeleton } from '@mui/material';
+import { Box, Grid, Typography, Skeleton } from '@mui/material';
 // hooks
 import { Link, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
@@ -35,6 +35,7 @@ export default function Profile() {
 
   const usesrId = useParams().id || '';
 
+  const [profile, setProfile] = useState(user);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -43,6 +44,7 @@ export default function Profile() {
       const posts = await getAllPosts();
       const myPosts = posts.filter((post: IPostType) => parseInt(usesrId) === post.author.id);
       setPosts(myPosts);
+      setProfile(myPosts[0].author);
       setLoading(false);
     } catch (e) {
       console.error(e);
@@ -64,7 +66,7 @@ export default function Profile() {
         }}
       >
         <LetterAvatar
-          name={user?.username}
+          name={profile?.username}
           styleOptions={{
             width: '75px',
             height: '75px',
@@ -72,10 +74,10 @@ export default function Profile() {
           }}
         />
         <Typography gutterBottom variant="h5" component="div">
-          {user && user.username}
+          {profile?.username}
         </Typography>
         <Typography component="div" color="text.secondary">
-          {user && user.email}
+          {profile?.email}
         </Typography>
         <Box>
           <Typography
@@ -85,7 +87,7 @@ export default function Profile() {
               margin: '40px 0px 16px 0px',
             }}
           >
-            내가 작성한 글 ({posts.length})
+            작성한 글 ({posts.length})
           </Typography>
 
           <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>

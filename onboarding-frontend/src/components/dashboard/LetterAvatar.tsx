@@ -26,6 +26,7 @@ export default function LetterAvatar({ name, styleOptions }: any) {
     return {
       sx: {
         bgcolor: stringToColor(name),
+        color: '#FFFFFF',
         ...styleOptions,
       },
       children: `${name[0]}`,
