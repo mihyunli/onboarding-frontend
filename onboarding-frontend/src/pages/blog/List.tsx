@@ -207,6 +207,7 @@ export default function BlogList() {
               padding: '1rem',
               height: '180px',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <CardMedia
