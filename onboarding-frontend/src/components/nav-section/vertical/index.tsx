@@ -45,7 +45,7 @@ export default function NavSectionVertical({
             {group.subheader}
           </ListSubheaderStyle>
           {group.items.map((list) => {
-            if (list.label === 'profile') list.path = `/dashboard/user/${user?.id}`;
+            if (list.label === 'profile') list.path = `/user/${user?.id}`;
             return <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />;
           })}
         </List>

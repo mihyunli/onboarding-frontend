@@ -101,7 +101,7 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS.map((option) => {
-            if (option.label === 'profile') option.linkTo = `/dashboard/user/${user?.id}`;
+            if (option.label === 'profile') option.linkTo = `/user/${user?.id}`;
             return (
               <MenuItem key={option.label} onClick={() => moveToProfilePage(option.linkTo)}>
                 {option.title}

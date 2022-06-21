@@ -18,7 +18,7 @@ export default function ProfileCard({ author }: IPropsType) {
   const navigation = useNavigate();
 
   const moveToProfilePage = () => {
-    navigation(`/dashboard/user/${author.id}`);
+    navigation(`/user/${author.id}`);
   };
 
   return (

@@ -40,8 +40,12 @@ export default function Router() {
         { path: '', element: <BlosgList />, index: true },
         { path: ':id', element: <BlogDetail /> },
         { path: 'create', element: <BlogDetail /> },
-        { path: '/dashboard/user/:id', element: <Profile /> },
       ],
+    },
+    {
+      path: '/user/:id',
+      element: <DashboardLayout />,
+      children: [{ path: '', element: <Profile />, index: true }],
     },
     {
       path: '*',
