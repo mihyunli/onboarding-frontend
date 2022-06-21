@@ -1,4 +1,4 @@
-import React, { useEffect, useState, KeyboardEvent } from 'react';
+import React, { useEffect, useState } from 'react';
 // apis
 import { getAllPosts } from '../../api/blog';
 // @mui
