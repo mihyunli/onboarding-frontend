@@ -5,6 +5,7 @@ import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import GuestGuard from './GuestGuard';
 // pages
 import Login from '../pages/auth/Login';
 import SignUp from '../pages/auth/SignUp';
@@ -35,7 +36,11 @@ export default function Router() {
     },
     {
       path: '/dashboard',
-      element: <DashboardLayout />,
+      element: (
+        <GuestGuard>
+          <DashboardLayout />
+        </GuestGuard>
+      ),
       children: [
         { path: '', element: <BlosgList />, index: true },
         { path: ':id', element: <BlogDetail /> },
@@ -44,7 +49,11 @@ export default function Router() {
     },
     {
       path: '/user/:id',
-      element: <DashboardLayout />,
+      element: (
+        <GuestGuard>
+          <DashboardLayout />
+        </GuestGuard>
+      ),
       children: [{ path: '', element: <Profile />, index: true }],
     },
     {

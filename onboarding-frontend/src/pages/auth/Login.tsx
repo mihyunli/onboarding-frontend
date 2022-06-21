@@ -2,13 +2,17 @@
 import { Grid, Button, TextField, Typography } from '@mui/material';
 
 // hooks
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useForm from '../../hooks/useForm';
 
 // ----------------------------------------------------------------------
 
+type LocationStateType = { pathFrom?: string } | null;
+
 export default function Login() {
   const navigation = useNavigate();
+  const { state } = useLocation();
+  let targetPath = (state as LocationStateType)?.pathFrom || '/dashboard';
 
   const defaultValues = {
     email: '',
@@ -25,7 +29,7 @@ export default function Login() {
         password: values.password,
       },
     });
-    isLoginSuccess && navigation('/');
+    isLoginSuccess && navigation(targetPath);
   };
 
   const moveToSignUpPage = () => {

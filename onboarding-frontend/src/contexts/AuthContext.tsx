@@ -6,7 +6,6 @@ import { signIn, signUp, getProfile } from '../api/auth';
 // utils
 import { isEmpty, get } from 'lodash';
 import { isValidToken, setSession } from '../utils/jwt';
-import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +23,7 @@ export type ActionMap<M extends { [index: string]: any }> = {
 export type AuthState = {
   isAuthenticated: boolean;
   isInitialized: boolean;
+  isLoading: boolean;
   user: AuthUser;
 };
 
@@ -38,6 +38,7 @@ enum Types {
 export type AuthContextType = {
   isAuthenticated: boolean;
   isInitialized: boolean;
+  isLoading: boolean;
   user: AuthUser;
   logout: () => void;
   login: (form: IFormValues) => Promise<{ success: boolean; message?: string }>;
@@ -71,6 +72,7 @@ interface IFormValues {
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
+  isLoading: true,
   user: null,
 };
 
@@ -80,6 +82,7 @@ const JWTReducer = (state: AuthState, action: AuthActions) => {
       return {
         isAuthenticated: action.payload.isAuthenticated,
         isInitialized: true,
+        isLoading: false,
         user: action.payload.user,
       };
     case 'LOGIN':
@@ -104,8 +107,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(JWTReducer, initialState);
-
-  const navigation = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -136,7 +137,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         user: null,
       },
     });
-    return navigation('/login');
   };
 
   const login = async (form: IFormValues) => {
