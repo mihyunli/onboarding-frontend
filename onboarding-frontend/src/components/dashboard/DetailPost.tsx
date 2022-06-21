@@ -31,7 +31,7 @@ export default function DetailPost({ post, moveToDashboard, setMode, handleDelet
           <span style={{ fontStyle: 'italic' }}>by </span>
           {post.author.username} &#183; {formatDate(post.createdAt)}
         </Typography>
-        <Typography component="p" style={{ margin: '16px 8px' }}>
+        <Typography component="p" style={{ margin: '16px 8px', whiteSpace: 'pre-wrap' }}>
           {post.body}
         </Typography>
         <Box style={{ width: '500px', marginTop: '40px' }}>
